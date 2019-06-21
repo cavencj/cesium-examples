@@ -1,0 +1,17 @@
+<div class="map-container" id="map-container"></div>
+<script>
+  let viewer = new Cesium.Viewer('map-container', {
+    baseLayerPicker: false,
+    animation: false,
+    homeButton: false,
+    selectionIndicator: false,
+    navigationHelpButton: false,
+    timeline: false,
+    geocoder: false,
+    sceneModePicker: false,
+    imageryProvider: new Cesium.UrlTemplateImageryProvider({
+      url: 'http://mt1.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=Galile'
+    })
+  })
+  viewer.cesiumWidget._creditContainer.style.display = 'none'
+</script>

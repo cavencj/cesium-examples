@@ -1,0 +1,64 @@
+[
+  {
+    "name": "map",
+    "label": "地图"
+  },
+  {
+    "name": "vector",
+    "label": "矢量数据",
+    "children": [
+      {
+        "name": "point",
+        "label": "点数据"
+      },
+      {
+        "name": "polyline",
+        "label": "线数据"
+      },
+      {
+        "name": "polylgon",
+        "label": "面数据"
+      }
+    ]
+  },
+  {
+    "name": "model",
+    "label": "三维模型"
+  },
+  {
+    "name": "a",
+    "label": "分析"
+  },
+  {
+    "name": "mapV",
+    "label": "可视化",
+    "children": [
+      {
+        "name": "normal",
+        "label": "常规"
+      },
+      {
+        "name": "echarts",
+        "label": "Echarts"
+      }
+    ]
+  },
+  {
+    "name": "widgets",
+    "label": "组件",
+    "children": [
+      {
+        "name": "1232",
+        "label": "功能组件"
+      },
+      {
+        "name": "232",
+        "label": "业务组件"
+      }
+    ]
+  },
+  {
+    "name": "tools",
+    "label": "工具"
+  }
+]
