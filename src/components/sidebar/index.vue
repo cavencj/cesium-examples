@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <i-menu theme="dark">
+    <i-menu theme="dark" accordion>
       <template v-for="item in menuData">
         <menu-item v-if="!item.children" :key="item.label" :name="item.name"> {{item.label }}</menu-item>
         <submenu v-if="!!item.children" :key="item.label" :name="item.name">
@@ -18,13 +18,15 @@
 
 <script>
 import { Menu, MenuItem, Submenu } from 'iview'
-import menu_data from '@/data/menu.json'
 const name = 'Sidebar'
 export default {
   name,
-  data() {
-    return {
-      menuData: menu_data
+  props: {
+    menuData: {
+      type: Array,
+      defalut() {
+        return []
+      }
     }
   },
   components: {

@@ -4,8 +4,9 @@
       <div class="title">
         <h3>代码编辑器</h3>
         <div class="btns">
-          <i-button size="small" type="warning" style="margin-right:10px" @click="reset">重置</i-button>
-          <i-button size="small" type="success" style="margin-right:10px" @click="run">运行</i-button>
+          <i-button size="small" type="primary" style="margin-right:10px" @click.prevent="goback">返回</i-button>
+          <i-button size="small" type="warning" style="margin-right:10px" @click.prevent="reset">重置</i-button>
+          <i-button size="small" type="success" style="margin-right:10px" @click.prevent="run">运行</i-button>
         </div>
 
       </div>
@@ -47,41 +48,49 @@ export default {
   },
   methods: {
     initEditor() {
-      let config = {
-        theme: 'vs-dark',
-        formatOnPaste: true,
-        fontSize: 14,
-        scrollbar: {
-          verticalScrollbarSize: 2
+      return new Promise((resolve, reject) => {
+        let config = {
+          theme: 'vs-dark',
+          formatOnPaste: true,
+          fontSize: 14,
+          scrollbar: {
+            verticalScrollbarSize: 2
+          }
         }
-      }
-      this.htmlEditor = monaco.editor.create(this.$refs['html-editor'], {
-        value: this.htmlStr,
-        language: 'html',
-        ...config
+        this.htmlEditor = monaco.editor.create(this.$refs['html-editor'], {
+          value: this.htmlStr,
+          language: 'html',
+          ...config
+        })
+        this.jsEditor = monaco.editor.create(this.$refs['js-editor'], {
+          value: this.jsStr,
+          language: 'javascript',
+          ...config
+        })
+        resolve()
       })
-      this.jsEditor = monaco.editor.create(this.$refs['js-editor'], {
-        value: this.jsStr,
-        language: 'javascript',
-        ...config
-      })
-      this.loadPreview()
     },
-
+    goback() {
+      this.$router.push('example-list')
+    },
     reset() {
+      this.htmlStr = ''
+      this.jsStr = ''
       if (this.exampleHtml) {
         let index = this.exampleHtml.indexOf('<script>')
         this.htmlStr = this.exampleHtml.substr(0, index)
         this.jsStr = this.exampleHtml.substr(index).replace(/<\/?script>\n/g, '')
-        this.htmlEditor.setValue(this.htmlStr)
-        this.jsEditor.setValue(this.jsStr)
-        this.loadPreview()
       }
+      this.htmlEditor.setValue(this.htmlStr)
+      this.jsEditor.setValue(this.jsStr)
+      this.loadPreview()
     },
     run() {
       this.htmlStr = this.htmlEditor.getValue()
       this.jsStr = this.jsEditor.getValue()
-      this.loadPreview()
+      if (this.htmlStr) {
+        this.loadPreview()
+      }
     },
     loadPreview() {
       let iFrame = this.createIFrame()
@@ -91,13 +100,10 @@ export default {
       let content = this.htmlStr + '<script>' + this.jsStr + '<' + '/script>'
       iframeDocument.write(this.previewHtml.replace('<bodyhtml/>', content))
       iframeDocument.close()
-      iframeDocument.addEventListener('load', function() {
-        // mapHeight()
-      })
-      //mapHeight()
     },
     getExamplePage() {
-      return axios.get('/pages/01_TDT.html')
+      let anchor = this.$store.getters.anchor || 'blank'
+      return axios.get(`/pages/${anchor}.html`)
     },
     getPreviewPage() {
       return axios.get('/pages/preview.html')
@@ -108,25 +114,28 @@ export default {
       var iframe = document.createElement('iframe')
       iframe.setAttribute('id', 'innerPage')
       iframe.setAttribute('name', 'innerPage')
-
       preViewPane.append(iframe)
       return iframe
     }
   },
   mounted() {
     this.splitVal = 0.4
-    axios.all([this.getExamplePage(), this.getPreviewPage()]).then(
-      axios.spread((example, preview) => {
-        this.exampleHtml = example.data
-        this.previewHtml = preview.data
-        if (this.exampleHtml && this.previewHtml) {
-          let index = this.exampleHtml.indexOf('<script>')
-          this.htmlStr = this.exampleHtml.substr(0, index)
-          this.jsStr = this.exampleHtml.substr(index).replace(/<\/?script>\n/g, '')
-          this.initEditor()
-        }
-      })
-    )
+    this.initEditor().then(() => {
+      axios.all([this.getExamplePage(), this.getPreviewPage()]).then(
+        axios.spread((example, preview) => {
+          this.exampleHtml = example.data
+          this.previewHtml = preview.data
+          if (this.exampleHtml && this.previewHtml) {
+            let index = this.exampleHtml.indexOf('<script>')
+            this.htmlStr = this.exampleHtml.substr(0, index)
+            this.jsStr = this.exampleHtml.substr(index).replace(/<\/?script>\n/g, '')
+            this.htmlEditor.setValue(this.htmlStr)
+            this.jsEditor.setValue(this.jsStr)
+            this.loadPreview()
+          }
+        })
+      )
+    })
   }
 }
 </script>

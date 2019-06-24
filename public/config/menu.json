@@ -18,16 +18,16 @@
       {
         "name": "polylgon",
         "label": "面数据"
+      },
+      {
+        "name": "other",
+        "label": "其他数据"
       }
     ]
   },
   {
     "name": "model",
     "label": "三维模型"
-  },
-  {
-    "name": "a",
-    "label": "分析"
   },
   {
     "name": "mapV",
@@ -44,6 +44,10 @@
     ]
   },
   {
+    "name": "a",
+    "label": "分析"
+  },
+  {
     "name": "widgets",
     "label": "组件",
     "children": [
@@ -56,6 +60,10 @@
         "label": "业务组件"
       }
     ]
+  },
+  {
+    "name": "sys",
+    "label": "系统"
   },
   {
     "name": "tools",

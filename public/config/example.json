@@ -1,0 +1,86 @@
+[
+  {
+    "name": "map",
+    "label": "地图",
+    "list": [
+      {
+        "key": "tdt",
+        "label": "天地图"
+      },
+      {
+        "key": "baidu",
+        "label": "百度"
+      },
+      {
+        "key": "amap",
+        "label": "高德"
+      },
+      {
+        "key": "tencent",
+        "label": "腾讯"
+      },
+      {
+        "key": "google",
+        "label": "谷歌"
+      },
+      {
+        "key": "arcgis",
+        "label": "Arcgis"
+      }
+    ]
+  },
+  {
+    "name": "point",
+    "label": "点数据",
+    "list": []
+  },
+  {
+    "name": "polyline",
+    "label": "线数据",
+    "list": []
+  },
+  {
+    "name": "polylgon",
+    "label": "面数据",
+    "list": []
+  },
+  {
+    "name": "other",
+    "label": "其他数据",
+    "list": []
+  },
+  {
+    "name": "model",
+    "label": "三维模型",
+    "list": [
+      {
+        "key": "m_white_mold",
+        "label": "白模"
+      },
+      {
+        "key": "m_gltf",
+        "label": "GLTF"
+      },
+      {
+        "key": "m_gltf_b",
+        "label": "GLTF(大量)"
+      },
+      {
+        "key": "m_tilt",
+        "label": "倾斜(化工厂)"
+      },
+      {
+        "key": "m_bim",
+        "label": "BIM(桥梁)"
+      },
+      {
+        "key": "m_point_cloud",
+        "label": "点云(火车站)"
+      },
+      {
+        "key": "m_czml",
+        "label": "动画"
+      }
+    ]
+  }
+]

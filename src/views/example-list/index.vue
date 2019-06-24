@@ -1,6 +1,6 @@
 <template>
   <div class="example-list">
-    <sidebar></sidebar>
+    <sidebar :menu-data="menuData"></sidebar>
     <div class="list">
       <div v-for="data in exampleData" :key="data.name">
         <h2 :id="data.name">{{data.label}}</h2>
@@ -8,7 +8,7 @@
         <div class="cards">
           <Card v-for="(item,index) in data.list" :key="index" class="card-item" style="cursor:pointer">
             <p slot="title" style="text-align:center">{{item.label}}</p>
-            <img src="../../assets/logo.png" @click.prevent="gotoEidtor(item)">
+            <img :src="getImagePath(data.name,item)" @click.prevent="gotoEidtor(data.name,item.key)">
           </Card>
         </div>
       </div>
@@ -18,14 +18,15 @@
 
 <script>
 import Sidebar from '@/components/sidebar'
-import example_data from '@/data/example.json'
 import { Card } from 'iview'
+import * as axios from 'axios'
 const name = 'ExampleList'
 export default {
   name,
   data() {
     return {
-      exampleData: example_data
+      menuData: [],
+      exampleData: []
     }
   },
   components: {
@@ -33,12 +34,37 @@ export default {
     Card
   },
   methods: {
-    gotoEidtor(item) {
+    getImagePath(folder, item) {
+      return 'images/' + folder + '/' + item.key + '.' + (item.img_suffix || 'png')
+    },
+    gotoEidtor(folder, key) {
+      this.$store.dispatch('setAnchor', folder + '/' + key)
       this.$router.push('editor')
+    },
+    getMenuData() {
+      return axios.get('/config/menu.json')
+    },
+    getExampleData() {
+      return axios.get('/config/example.json')
     }
+  },
+  mounted() {
+    axios.all([this.getMenuData(), this.getExampleData()]).then(
+      axios.spread((example, preview) => {
+        this.menuData = example.data
+        this.exampleData = preview.data
+      })
+    )
   }
 }
 </script>
+<style lang="scss">
+.example-list {
+  .ivu-card-body {
+    padding: 0px;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .example-list {
@@ -68,7 +94,13 @@ export default {
       .card-item {
         width: 250px;
         height: 250px;
-        margin: 10px 10px;
+        margin: 10px 15px;
+        text-align: center;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }

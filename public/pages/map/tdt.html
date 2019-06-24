@@ -8,10 +8,10 @@
     navigationHelpButton: false,
     timeline: false,
     geocoder: false,
-    sceneModePicker: false,
-    imageryProvider: new Cesium.UrlTemplateImageryProvider({
-      url: 'http://mt1.google.cn/vt/lyrs=m@207000000&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=Galile'
-    })
+    sceneModePicker: false
   })
   viewer.cesiumWidget._creditContainer.style.display = 'none'
+  viewer.imageryLayers.removeAll()
+  viewer.imageryLayers.addImageryProvider(new Cesium.TdtImageryProvider({ key: '87949882c75775b5069a0076357b7530' }))
+  viewer.imageryLayers.addImageryProvider(new Cesium.TdtImageryProvider({ layer: 'cva', key: '87949882c75775b5069a0076357b7530' }))
 </script>

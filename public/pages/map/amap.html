@@ -1,0 +1,16 @@
+<div class="map-container" id="map-container"></div>
+<script>
+  let viewer = new Cesium.Viewer('map-container', {
+    baseLayerPicker: false,
+    animation: false,
+    homeButton: false,
+    selectionIndicator: false,
+    navigationHelpButton: false,
+    timeline: false,
+    geocoder: false,
+    sceneModePicker: false
+  })
+  viewer.cesiumWidget._creditContainer.style.display = 'none'
+  viewer.imageryLayers.removeAll()
+  viewer.imageryLayers.addImageryProvider(new Cesium.AmapImageryProvider())
+</script>
