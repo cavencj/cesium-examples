@@ -54,15 +54,15 @@
     "label": "三维模型",
     "list": [
       {
-        "key": "m_white_mold",
+        "key": "white_mold",
         "label": "白模"
       },
       {
-        "key": "m_gltf",
+        "key": "gltf",
         "label": "GLTF"
       },
       {
-        "key": "m_gltf_b",
+        "key": "gltf_b",
         "label": "GLTF(大量)"
       },
       {
